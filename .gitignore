@@ -1,0 +1,13 @@
+.DS_Store
+.env
+.user.yml
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+logs/
+results/
+target/
+dbt_packages/
+context.md

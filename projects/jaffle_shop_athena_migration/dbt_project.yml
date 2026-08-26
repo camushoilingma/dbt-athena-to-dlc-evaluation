@@ -1,0 +1,43 @@
+name: jaffle_shop_athena_migration
+version: "1.0"
+config-version: 2
+
+profile: jaffle_shop_athena_migration
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+analysis-paths: ["analyses"]
+
+target-path: target
+clean-targets: [target, dbt_packages, logs]
+
+require-dbt-version: [">=1.8.0", "<2.0.0"]
+
+vars:
+  load_batch: 1
+
+models:
+  jaffle_shop_athena_migration:
+    +file_format: iceberg
+    customers:
+      +materialized: table
+      +tags: [jaffle_baseline]
+    orders:
+      +materialized: table
+      +tags: [jaffle_baseline]
+    staging:
+      +materialized: view
+      +tags: [jaffle_baseline]
+    migration:
+      athena_source:
+        +materialized: view
+        +tags: [athena_source]
+      dlc_converted:
+        +materialized: view
+        +tags: [dlc_converted]
+
+seeds:
+  jaffle_shop_athena_migration:
+    +file_format: iceberg

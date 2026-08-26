@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: dlc_pattern_results
+    columns:
+      - name: id
+        data_tests: [not_null, unique]
+      - name: event_ts
+        data_tests: [not_null]
+      - name: event_date
+        data_tests: [not_null]
+      - name: channel
+        data_tests: [not_null]
+
+  - name: iceberg_order_upserts
+    columns:
+      - name: order_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests: [not_null]
+      - name: order_date
+        data_tests: [not_null]

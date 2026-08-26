@@ -1,0 +1,4 @@
+order_id,customer_id,order_date,status,amount_cents
+1,10,2024-01-01,shipped,1200
+2,20,2024-01-02,placed,2000
+3,30,2024-01-03,placed,3000

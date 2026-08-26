@@ -1,0 +1,9 @@
+case,athena_or_dbt_athena_pattern,dlc_equivalent,expected_effort,source
+iso_timestamp,from_iso8601_timestamp(value),to_timestamp(value),mechanical_rewrite,dbt-athena functional test
+formatted_date,"try(date_parse(value; %Y-%m-%d))","to_date(value; yyyy-MM-dd)",mechanical_rewrite_with_format_tokens,dbt-athena seed macro
+date_parse_only,"date_parse(value; %Y-%m-%d)","to_date(value; yyyy-MM-dd)",mechanical_rewrite_with_format_tokens,derived isolation probe
+json_scalar,"json_extract_scalar(value; $.channel)","get_json_object(value; $.channel)",mechanical_rewrite,AWS Athena documentation
+three_level_namespace,catalog.database.table,dbt ref/source relation rendering,no_model_sql_change,dbt-dlc relation contract
+iceberg_table,table_type=iceberg,file_format=iceberg,config_key_rewrite,dbt adapter configs
+iceberg_merge,"incremental_strategy=merge; unique_key=order_id","incremental_strategy=merge; unique_key=order_id",no_strategy_change,dbt adapter configs
+partitioning,partitioned_by=order_date,partition_by=order_date,config_key_rewrite,dbt adapter configs

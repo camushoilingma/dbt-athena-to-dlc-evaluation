@@ -1,0 +1,4 @@
+id,event_ts_iso,event_date_text,payload
+1,2020-01-01T00:00:00.000000Z,2020-01-01,"{""channel"":""web"",""customer_id"":1}"
+2,2020-01-02T12:34:56.000000Z,2020-01-02,"{""channel"":""mobile"",""customer_id"":2}"
+3,2020-01-03T23:59:59.000000Z,2020-01-03,"{""channel"":""store"",""customer_id"":3}"

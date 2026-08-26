@@ -1,0 +1,22 @@
+source_feature,dbt_athena_input,dbt_dlc_conversion,status,local_test
+Iceberg table,table_type=iceberg,file_format=iceberg,automatic,TestAthenaIcebergMaterializationsToDlc
+Iceberg append,incremental_strategy=append,incremental_strategy=append,automatic,TestAthenaIcebergAppendToDlc
+Iceberg merge,incremental_strategy=merge,incremental_strategy=merge,automatic,TestAthenaIcebergUniqueKeysToDlc
+Single unique key,unique_key=id,unique_key=id,unchanged,TestAthenaIcebergUniqueKeysToDlc
+Composite unique key,"unique_key=[state;county;city]","unique_key=[state;county;city]",unchanged,TestAthenaIcebergUniqueKeysToDlc
+Merge predicates,src and target aliases,DBT_INTERNAL_SOURCE and DBT_INTERNAL_DEST,automatic_rewrite,TestAthenaIcebergIncrementalPredicatesToDlc
+Merge excluded columns,merge_exclude_columns,merge_exclude_columns,unchanged,TestAthenaIcebergMergeExcludeColumnsToDlc
+Schema evolution,on_schema_change,on_schema_change,unchanged,TestAthenaIcebergOnSchemaChangeToDlc
+Snapshots,Iceberg snapshot,Iceberg snapshot,automatic,TestAthenaIcebergSnapshotCheckToDlc
+Seeds,CSV seed,CSV seed,unchanged,TestAthenaSeedToDlc
+Catalog generation,dbt docs generate,dbt docs generate,unchanged,TestAthenaDocsGenerateToDlc
+Partitioning,partitioned_by,partition_by,automatic_rewrite,planned
+Table properties,table_properties,tblproperties,property_review,planned
+File format,format=parquet,omit or review Iceberg table properties,manual_review,none
+Delete condition,delete_condition,no direct dbt-dlc config,unsupported,none
+Update condition,update_condition,no direct dbt-dlc config,unsupported,none
+Insert condition,insert_condition,no direct dbt-dlc config,unsupported,none
+Python model,Python model,no Python materialization,unsupported,none
+S3 Tables and catalogs v2,Athena catalog configuration,no DLC equivalent,unsupported,none
+AWS service profile,"Glue; Lake Formation; IAM; workgroup; S3 paths",DLC profile and CAM settings,manual_environment_conversion,none
+Athena lifecycle controls,"native_drop; force_batch; HA; temp schema",review intent and redesign,manual_review,none
