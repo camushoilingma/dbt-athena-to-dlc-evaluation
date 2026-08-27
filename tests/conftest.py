@@ -11,6 +11,11 @@ account-specific lives in source control.
 """
 
 import os
+import sys
+
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, REPO_ROOT)
+
 import pytest
 import yaml
 from dbt.tests.util import write_file
@@ -19,9 +24,6 @@ from envfile import load_dotenv
 
 # The fixtures that build a throwaway dbt project per test class.
 pytest_plugins = ["dbt.tests.fixtures.project"]
-
-REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
-
 
 def pytest_configure(config):
     load_dotenv()

@@ -6,7 +6,7 @@ profile: jaffle_shop_athena_migration
 
 model-paths: ["models"]
 seed-paths: ["seeds"]
-test-paths: ["tests"]
+test-paths: ["assertions"]
 macro-paths: ["macros"]
 analysis-paths: ["analyses"]
 

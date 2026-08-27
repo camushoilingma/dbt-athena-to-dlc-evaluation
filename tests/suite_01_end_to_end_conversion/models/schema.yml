@@ -51,7 +51,10 @@ models:
         description: Date (UTC) that the order was placed
 
       - name: status
-        description: '{{ doc("orders_status") }}'
+        description: >-
+          Order state: placed has not left the warehouse; shipped is in
+          transit; completed was received; return_pending was requested but
+          not received by the warehouse; returned was received back.
         tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
