@@ -12,8 +12,8 @@ equivalents are then built and validated on the same input rows.
 - `projects/jaffle_shop_athena_migration/`: the customer-focused experiment.
 - `tests/test_athena_to_dlc.py`: dbt Labs adapter fixtures converted to DLC.
 - `athena_to_dlc_matrix.csv`: source configuration to DLC mapping.
-- `docs/test_run_2026-08-26.md`: exact inputs, commands, outputs, and assertions
-  from the completed live run.
+- [`test_run_2026-08-26.md`](test_run_2026-08-26.md): exact inputs, commands,
+  outputs, and assertions from the completed live run.
 - `tests/test_*.py`: optional broader dbt adapter conformance coverage.
 
 The Jaffle Shop fixture is based on dbt Labs' `jaffle-shop-classic` at commit
@@ -46,16 +46,37 @@ CSV seeds, builds the unchanged Jaffle baseline, observes the original Athena
 expressions, validates converted date/JSON models, and executes a two-batch
 Iceberg MERGE with exact result reconciliation.
 
+This runner executes one checked-in dbt project with fixed CSV inputs and a
+fixed command order. It is the runner used for the dated evidence in
+[`test_run_2026-08-26.md`](test_run_2026-08-26.md).
+
 ## Adapter fixture suite
 
 ```bash
 ./run.sh athena
 ```
 
+The Python files under `tests/` are pytest test definitions, not command-line
+scripts. They subclass fixtures from `dbt-tests-adapter`; pytest creates a
+temporary dbt project and schema for each test class. Root `run.sh` selects the
+`athena_conversion` marker and invokes them through:
+
+```text
+./run.sh athena
+  -> python -m pytest -m athena_conversion
+  -> tests/test_athena_to_dlc.py
+```
+
 The Athena conversion tier contains 23 collected tests for materializations,
 append/merge, unique keys, predicates, excluded columns, schema evolution,
 snapshots, seeds, and catalog generation. This broader tier has been collected
 offline but has not been executed as part of the recorded customer run.
+
+It is deliberately not called by `run_migration.sh full`: that command records
+the fixed Jaffle customer experiment, while the Python suite creates many
+temporary projects and tests broader adapter behavior. Combining them would
+make the dated run claim tests that were never executed live. To execute the
+Python tests, run `./run.sh athena` separately from the repository root.
 
 The optional `core`, `extended`, and `all` tiers exercise general adapter
 behavior beyond the customer migration scope.
